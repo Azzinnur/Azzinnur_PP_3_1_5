@@ -1,0 +1,39 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Users list</title>
+</head>
+<body>
+<div align="center">
+    <h2>Users List</h2>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>E-mail</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="user :${users}">
+            <td><p th:text="${user.id}"/></td>
+            <td><p th:text="${user.username}"/></td>
+            <td><p th:text="${user.email}"/></td>
+            <td>
+                <a th:href = "@{/admin/editUser/{id}(id=${user.id})}">Edit User</a>
+                <a th:href = "@{/admin/deleteUser/{id}(id=${user.id})}">Delete User</a>
+            </td>
+        </tr>
+    </table>
+    <br><br>
+    <input type="button" value="Add New User"
+           onclick="window.location.href = '/admin/addNewUser'"/>
+    <br><br>
+    <input type="button" value="User page"
+           onclick="window.location.href = '/user'"/>
+    <br><br>
+    <a th:href = "@{/logout}">Logout</a>
+</div>
+<div align="center" th:object="${admin}">
+    <h2> <span th:text="*{username}">User</span>, welcome to the Admin part of Spring Security application!</h2>
+</div>
+</body>
+</html>
