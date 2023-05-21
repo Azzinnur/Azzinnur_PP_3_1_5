@@ -43,11 +43,12 @@ public class UserService implements UserDetailsService {
     }
 
     public void addOrUpdate(User user){
-        User oldUser = userRepository.getById(user.getId());
-        if(user.getPassword().isBlank()) {
+        if(user.getId() != null || user.getPassword().isBlank()) {
+            User oldUser = userRepository.getById(user.getId());
             user.setPassword(oldUser.getPassword());
         } else {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));}
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userRepository.save(user);
     }
 

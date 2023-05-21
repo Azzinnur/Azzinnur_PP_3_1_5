@@ -54,12 +54,14 @@ public class UserController {
 
     @PatchMapping(value = "/admin/saveUser")
     public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors() && user.getId() != null) {
+        if (bindingResult.hasErrors()) {
             List<Role> roles = roleService.getAllRoles();
             model.addAttribute("allRoles", roles);
-            return "edit_user";
-        } else if (bindingResult.hasErrors()) {
-            return "new_user";
+            if (user.getId() != null) {
+                return "edit_user";
+            } else {
+                return "new_user";
+            }
         }
         userService.addOrUpdate(user);
         return "redirect:/admin";
