@@ -2,6 +2,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Users list</title>
+    <style>
+        .input {
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
 <div align="center">
@@ -11,15 +16,22 @@
             <th>ID</th>
             <th>Username</th>
             <th>E-mail</th>
+            <th>Roles</th>
             <th>Actions</th>
         </tr>
         <tr th:each="user :${users}">
             <td><p th:text="${user.id}"/></td>
             <td><p th:text="${user.username}"/></td>
             <td><p th:text="${user.email}"/></td>
+            <td><p th:each="role :${user.roles}" th:text="${role.name}"/></td>
             <td>
-                <a th:href = "@{/admin/editUser/{id}(id=${user.id})}">Edit User</a>
-                <a th:href = "@{/admin/deleteUser/{id}(id=${user.id})}">Delete User</a>
+                <form class="input" th:action="@{/admin/editUser/{id}(id=${user.id})}" method="get">
+                    <input type="submit" value="Edit User"/>
+                </form>
+                <form class="input" th:action="@{/admin/deleteUser/{id}(id=${user.id})}" method="post">
+                    <input type="hidden" name="_method" th:value="delete"/>
+                    <input type="submit" value="Delete User"/>
+                </form>
             </td>
         </tr>
     </table>
@@ -30,10 +42,10 @@
     <input type="button" value="User page"
            onclick="window.location.href = '/user'"/>
     <br><br>
-    <a th:href = "@{/logout}">Logout</a>
+    <a th:href="@{/logout}">Logout</a>
 </div>
 <div align="center" th:object="${admin}">
-    <h2> <span th:text="*{username}">User</span>, welcome to the Admin part of Spring Security application!</h2>
+    <h2><span th:text="*{username}">User</span>, welcome to the Admin part of Spring Security application!</h2>
 </div>
 </body>
 </html>

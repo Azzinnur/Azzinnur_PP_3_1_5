@@ -10,12 +10,14 @@
             <th>ID</th>
             <th>Username</th>
             <th>E-mail</th>
+            <th>Roles</th>
             <th>Actions</th>
         </tr>
         <tr th:object="${user}">
             <td><p th:text="*{id}"/></td>
             <td><p th:text="*{username}"/></td>
             <td><p th:text="*{email}"/></td>
+            <td><p th:each="role :*{roles}" th:text="${role.name}"/></td>
             <td>
                 <a th:href = "@{/logout}">Logout</a>
             </td>
