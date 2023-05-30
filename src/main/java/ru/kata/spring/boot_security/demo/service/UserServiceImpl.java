@@ -21,9 +21,13 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
-    public User findUserByUsername(String username) {
-        return userRepository.findUserByUsername(username);
+    @Override
+    public User findUserById(Long id){
+        return userRepository.getById(id);
+    }
+    @Override
+    public User findUserByUsername(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
     @Override
@@ -36,16 +40,19 @@ public class UserServiceImpl implements UserService {
                 user.getRoles());
     }
 
+    @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+    @Override
     @Transactional
     public void add(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
+    @Override
     @Transactional
     public void update(User user){
         if(user.getPassword().isBlank()) {
@@ -57,10 +64,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public User findUserById(Long id){
-        return userRepository.getById(id);
-    }
-
+    @Override
     @Transactional
     public void delete(Long id){
         userRepository.deleteById(id);

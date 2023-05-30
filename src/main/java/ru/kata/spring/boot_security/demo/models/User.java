@@ -1,24 +1,33 @@
 package ru.kata.spring.boot_security.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User implements UserDetails, Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Size(min = 3, max = 100, message = "Поле должно быть не менее 3 и не более 100 символов длиной!")
-    @Column(name = "username")
-    private String username;
+    @Column(name = "firstname")
+    private String firstname;
+
+    @Size(min = 3, max = 100, message = "Поле должно быть не менее 3 и не более 100 символов длиной!")
+    @Column(name = "lastname")
+    private String lastname;
+
+    @Min(value=7, message = "Зарегистрировать пользователя можно только с 7 лет!")
+    @Max(value=200, message = "Введите валидный возраст!")
+    @Column(name = "age")
+    private Integer age;
 
     @Column(name = "password")
     private String password;
@@ -32,13 +41,14 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Collection<Role> roles;
 
     public User() {
     }
 
     public User(String username, String password, String email) {
-        this.username = username;
+        this.firstname = username;
         this.password = password;
         this.email = email;
     }
@@ -51,20 +61,42 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFirstName() {
+        return firstname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFirstName(String firstname) {
+        this.firstname = firstname;
     }
 
+    public String getLastName() {
+        return lastname;
+    }
+
+    public void setLastName(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    @Override
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     public String getEmail() {

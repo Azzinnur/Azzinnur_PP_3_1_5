@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 
@@ -15,9 +14,6 @@ import java.security.Principal;
 public class UserController {
     @Autowired
     private UserServiceImpl userServiceImpl;
-
-    @Autowired
-    private RoleServiceImpl roleServiceImpl;
 
     @GetMapping(value = "/")
     public String index(){
