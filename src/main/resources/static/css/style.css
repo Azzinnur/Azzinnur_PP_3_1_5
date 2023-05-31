@@ -4,22 +4,17 @@
 .panel-container {
     max-width: 100%;
 }
-.header-nav-link {
-    display: inline-block;
-    padding-top: 0.3125rem;
-    padding-bottom: 0.3125rem;
-    margin-right: 1rem;
-    font-size: 1.25rem;
-    line-height: inherit;
-    white-space: nowrap;
-}
 
 .nav-link {
     background: 0 0;
     border: 0;
     border-radius: 0.25rem;
     color: #007bff;
-    outline: none;
+}
+
+.nav-link:focus {
+    outline: 0;
+    outline-offset: 0;
 }
 
 .col-10 {
