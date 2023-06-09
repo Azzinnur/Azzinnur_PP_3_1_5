@@ -1,12 +1,14 @@
 package ru.kata.spring.boot_security.demo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -16,33 +18,34 @@ public class User implements UserDetails, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 3, max = 100, message = "Поле должно быть не менее 3 и не более 100 символов длиной!")
+    @Size(min = 3, max = 100, message = "First name length should be not less than 3 and not more than 100 symbols!")
     @Column(name = "firstname")
     private String firstname;
 
-    @Size(min = 3, max = 100, message = "Поле должно быть не менее 3 и не более 100 символов длиной!")
+    @Size(min = 3, max = 100, message = "Last name length should be not less than 3 and not more than 100 symbols!")
     @Column(name = "lastname")
     private String lastname;
 
-    @Min(value=7, message = "Зарегистрировать пользователя можно только с 7 лет!")
-    @Max(value=200, message = "Введите валидный возраст!")
+    @Min(value=7, message = "User should be elder the 7 years old to register!")
+    @Max(value=200, message = "Please enter valid age!")
     @Column(name = "age")
     private Integer age;
 
     @Column(name = "password")
     private String password;
 
-    @NotEmpty(message = "Введите валидный E-mail!")
-    @Email(message = "Введите валидный E-mail!")
+    @NotEmpty(message = "Please enter valid E-mail!")
+    @Email(message = "Please enter valid E-mail!")
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Collection<Role> roles;
+    private Set<Role> roles;
 
     public User() {
     }
@@ -107,16 +110,16 @@ public class User implements UserDetails, Serializable {
         this.email = email;
     }
 
-    public void setRoles(Collection<Role> roles){
+    public void setRoles(Set<Role> roles){
         this.roles = roles;
     }
 
-    public Collection<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
     @Override
-    public Collection<Role> getAuthorities() {
+    public Set<Role> getAuthorities() {
         return roles;
     }
 

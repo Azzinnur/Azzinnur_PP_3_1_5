@@ -11,19 +11,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script type="text/javascript" th:src="@{js/user.js}" src="../static/js/user.js"></script>
 </head>
 <body>
 <header class="header navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-1" >
     <div class="navbar-brand col-md-9" id="navbarText">
         <div class="d-inline h5">
-                    <span class="text-white float-left ml-2 font-weight-bold" th:text="${user.email}">
+                    <span class="text-white float-left ml-2 font-weight-bold" id="header-mail">
                         Mail
                     </span>
             <span class="text-white float-left align-middle ml-2"> with roles: </span>
         </div>
-        <div class="d-inline h5" th:each="role : ${user.roles}">
-                    <span class="text-white float-left align-middle ml-2"
-                          th:text="${#strings.substringAfter(role.name, 'ROLE_')}">
+        <div class="d-inline h5">
+                    <span class="text-white float-left align-middle ml-2" id="header-roles">
                        Roles
                     </span>
         </div>
@@ -32,7 +33,7 @@
         <div class="nav-item text-nowrap">
             <form action="/logout" method="post">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                <button type="submit" class="btn btn-link nav-link px-3"><h4>Logout</h4></button>
+                <button type="submit" class="btn btn-link nav-link px-3 р4">Logout</button>
             </form>
         </div>
     </div>
@@ -72,18 +73,6 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td><p th:text="${user.id}"/></td>
-                                        <td><p th:text="${user.firstName}"/></td>
-                                        <td><p th:text="${user.lastName}"/></td>
-                                        <td><p th:text="${user.age}"/></td>
-                                        <td><p th:text="${user.email}"/></td>
-                                        <td>
-                                            <div class="d-inline" th:each="role : ${user.roles}">
-                                                <span th:text="${#strings.substringAfter(role.name, 'ROLE_')}">Role</span>
-                                            </div>
-                                        </td>
-                                    </tr>
                                     </tbody>
                                 </table>
                                 <br>
