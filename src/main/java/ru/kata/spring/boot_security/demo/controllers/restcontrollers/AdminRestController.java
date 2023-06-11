@@ -11,7 +11,6 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@ResponseBody
 @RequestMapping("api/admin")
 public class AdminRestController {
     private final UserService userService;

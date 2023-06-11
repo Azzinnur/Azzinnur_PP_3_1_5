@@ -14,7 +14,6 @@ public class UserRestController {
     private UserService userService;
 
     @GetMapping(value = "/user")
-    @ResponseBody
     public User getUser(Principal principal){
         return userService.findUserByUsername(principal.getName());
     }
