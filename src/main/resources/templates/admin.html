@@ -16,7 +16,7 @@
             crossorigin="anonymous"></script>
     <script type="text/javascript" th:src="@{js/admin.js}" src="../static/js/admin.js"></script>
     </head>
-<body>
+<body style='overflow-x:hidden; overflow-y:hidden' >
 
 <header class="header navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-1" >
     <div class="navbar-brand col-md-9" id="navbarText">
@@ -32,7 +32,7 @@
         <div class="nav-item text-nowrap">
             <form action="/logout" method="post">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                <button type="submit" class="btn-lg btn-link nav-link px-3">Logout</button>
+                <button type="submit" class="btn-lg btn-link nav-link px-3 р4">Logout</button>
             </form>
         </div>
     </div>
